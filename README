@@ -1,0 +1,47 @@
+django-database-storage
+=======================
+
+This is a utility for Django that implements the Django Storage API (for
+storing FileFields, ImageFields, etc.) and stores the contents of the files in
+your Django database instead of on the filesystem.
+
+This is mainly intended to be an easy-to-use way to store file attachments and
+get rid of the pain of managing filesystem access at run time, and the
+deployment issues that come with it.  If your file attachment needs are
+simple, this will generally be a quick way to get your app working.
+
+Features:
+
+* Store any file in any database supported by Django.
+* Simplify deployment and data management: No need to keep track of file
+  attachments when migrating data from one server to another, since files live
+  in the database.
+
+Limitations:
+
+* Django does not support binary fields (issue #2417) and as of this writing,
+  expects queries to always return unicode data (issue #5135).  As a result,
+  this library uses base64 encoding to make binary data safe for the database,
+  which inflates data size by about 33%.
+* Databases are not always built with large file storage in mind (unlike
+  filesystems).  As such, this is based on the assumption that files are
+  "reasonably" sized, meaning well under 1MB.  Files are entirely loaded into
+  RAM during requests. Your mileage may vary.
+* No performance guarantees whatsoever.  The idea is that these are small
+  image attachments for a blog or similar, not that you are hosting a Youtube
+  clone in your Django database.
+
+See the documentation in the database_storage module for usage.
+
+License and Copyright
+---------------------
+
+License: BSD
+
+Originally derived from this snippet, although almost entirely rewritten for
+better robustness and clarity:
+
+  http://djangosnippets.org/snippets/1305/
+
+Copyright 2011 Mike Mueller, mike@subfocal.net.
+Original copyright 2009 (c) GameKeeper Gambling Ltd, Ivanov E
