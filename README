@@ -31,7 +31,16 @@ Limitations:
   image attachments for a blog or similar, not that you are hosting a Youtube
   clone in your Django database.
 
-See the documentation in the database_storage module for usage.
+Getting Started
+---------------
+
+1. Install (pip install django-database-storage)
+2. Read the help:
+
+    $ ./manage.py shell
+    ...
+    >>> from database_storage import DatabaseStorage
+    >>> help(DatabaseStorage)
 
 License and Copyright
 ---------------------
