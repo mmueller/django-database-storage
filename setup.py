@@ -4,7 +4,7 @@ from distutils.core import setup
 
 setup(
     name='django-database-storage',
-    version='0.1.1',
+    version='0.1.2',
     packages=['database_storage'],
     license='BSD',
     long_description=open('README').read(),
