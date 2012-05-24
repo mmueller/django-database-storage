@@ -180,7 +180,8 @@ class CursorWrapper:
     def __getattr__(self, n):
         "Passthru to the underlying cursor object except for 'execute'."
         def new_execute(self, query, *args):
-            return self.cursor.execute(query.replace("%s", "?"), *args)
+            # PostgreSQL's execute returns None, so we should test this.
+            self.cursor.execute(query.replace("%s", "?"), *args)
         if n == 'execute':
             return new_execute.__get__(self, CursorWrapper)
         return getattr(self.cursor, n)

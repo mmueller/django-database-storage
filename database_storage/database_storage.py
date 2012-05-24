@@ -131,7 +131,9 @@ class DatabaseStorage(Storage):
         query = 'SELECT %(data_column)s FROM %(table)s ' + \
                 'WHERE %(name_column)s = %%s'
         query %= self.__dict__
-        row = connection.cursor().execute(query, [name]).fetchone()
+        cursor = connection.cursor()
+        cursor.execute(query, [name])
+        row = cursor.fetchone()
         if row is None:
             return None
 
@@ -169,7 +171,9 @@ class DatabaseStorage(Storage):
     def exists(self, name):
         query = 'SELECT COUNT(*) FROM %(table)s WHERE %(name_column)s = %%s'
         query %= self.__dict__
-        row = connection.cursor().execute(query, [name]).fetchone()
+        cursor = connection.cursor()
+        cursor.execute(query, [name])
+        row = cursor.fetchone()
         return int(row[0]) > 0
 
     def delete(self, name):
@@ -193,7 +197,9 @@ class DatabaseStorage(Storage):
         query = 'SELECT %(size_column)s FROM %(table)s ' + \
                 'WHERE %(name_column)s = %%s'
         query %= self.__dict__
-        row = connection.cursor().execute(query, [name]).fetchone()
+        cursor = connection.cursor()
+        cursor.execute(query, [name])
+        row = cursor.fetchone()
         if not row:
             raise ObjectDoesNotExist(
                 "DatabaseStorage file not found: %s" % name)
